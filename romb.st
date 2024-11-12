@@ -94,7 +94,7 @@ pole
    
     | bok kat |
     bok := (wierzcholki at: 2) x.
-    kat :=  bok arcsin.
+    kat :=  bok arcSin.
     kat := (wierzcholki at: 3) y / kat. 
     ^  bok *  bok * ( kat sin) abs.!!
 
@@ -120,10 +120,19 @@ initialize: bok kat:kat
 !Romb methodsFor: 'displaying'!
 drukuj
     "drukuje nazwe wielokata i jego wierzcholkow"
-        super drukuj.
-        Transcript cr;
-        show: 'Pole rombu to: ';
-        show: self pole;cr.! !
+    (self checkIfWielokat: self) ifTrue: [
+        Transcript show: 'Ta klasa jest wielokatem'; cr.
+    ] ifFalse: [
+        Transcript show: 'Ta klasa nie jest wielokatem'; cr.
+    ].
+    Transcript show: 'Nazwa wielokata to: '; cr.
+    Transcript show: self nazwa; cr.
+    Transcript show: 'Pole wielokata to: '; cr.
+    Transcript show: self pole printString; cr.
+    Transcript show: 'Wierzcholki wielokata to: '; cr.
+    1 to: wierzcholki size do: [:i |
+        Transcript show: (wierzcholki at: i) printString; cr.
+    ].!!
 
 
 

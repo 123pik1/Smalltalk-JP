@@ -84,7 +84,8 @@ Wielokat subclass: #Romb
     | p |
 
     p := self pole + figura pole.
-    ^(Romb new) initialize: p sqrt kat: self kat! !
+	^(Romb new) initialize: ((p/(self kat sin)) sqrt) kat: self kat.! !
+   
 
 !Romb methodsFor: 'actions'!
 

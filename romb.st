@@ -84,7 +84,7 @@ Wielokat subclass: #Romb
     | p |
 
     p := self pole + figura pole.
-    ^(Romb new) initialize: p sqrt kat: 45! !
+    ^(Romb new) initialize: p sqrt kat: self kat! !
 
 !Romb methodsFor: 'actions'!
 
@@ -94,10 +94,7 @@ pole
 	"TODO: pole rombu"
     | bok |
     bok := (wierzcholki at: 2) x.
-    kat :=  bok arcSin.
-    kat := (wierzcholki at: 3) y / kat. 
-	Transcript show: (kat) printString;cr.
-    ^  bok *  bok * ( kat sin) abs.!!
+    ^  bok *  bok * (self kat  sin) abs.!!
 
 
 
@@ -110,20 +107,17 @@ initialize: bok kat:kat
 	super initialize: 4 name: 'Romb'.
     self kat: kat.
 	wierzcholki at: 2 put: bok@0.
-    
-	wierzcholki at: 3 put: (bok )@(bok ).
-	wierzcholki at: 4 put: (0)@(bok ).
+	wierzcholki at: 3 put: 2*bok@(bok * (self kat  sin) abs).
+	wierzcholki at: 4 put: bok@(bok * (self kat  sin) abs + bok).
     Transcript show: 'Romb created';cr.
     !
-	kat: aKat
-	"ustawia kat rombu"
-	kat := aKat!
-	!
+	
 	!
 
 !Romb methodsFor: 'displaying'!
 drukuj
     "drukuje nazwe wielokata i jego wierzcholkow"
+	
     (self checkIfWielokat: self) ifTrue: [
         Transcript show: 'Ta klasa jest wielokatem'; cr.
     ] ifFalse: [
@@ -140,7 +134,14 @@ drukuj
 
 
 
-
+!Romb methodsFor: 'accessing'!
+	kat 
+	"podaje kat rombu"
+	^kat! 
+	kat: aKat
+	"ustawia kat rombu"
+	kat := aKat!
+	!!
 
 
 
@@ -187,8 +188,12 @@ initialize: bok
 
 | romb |
 romb := Romb new.
-romb initialize: 7 kat: 45.
+romb initialize: 7 kat:  0.785398e.
+| romb1 |
+romb1 := Romb new.
+romb1 initialize: 2 kat: 0.785398e.
 
+(romb+romb1) drukuj.
 
 
 romb drukuj.

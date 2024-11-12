@@ -70,7 +70,7 @@ drukuj
 
 
 Wielokat subclass: #Romb
-	instanceVariableNames: ''
+	instanceVariableNames: 'kat '
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'JezykiProgramowania'!
@@ -91,11 +91,12 @@ Wielokat subclass: #Romb
 pole
 	"licz pole Rombu"
 
-   
-    | bok kat |
+	"TODO: pole rombu"
+    | bok |
     bok := (wierzcholki at: 2) x.
     kat :=  bok arcSin.
     kat := (wierzcholki at: 3) y / kat. 
+	Transcript show: (kat) printString;cr.
     ^  bok *  bok * ( kat sin) abs.!!
 
 
@@ -107,15 +108,18 @@ initialize: bok kat:kat
     
 	"tworz Romb o podanym boku i kącie"
 	super initialize: 4 name: 'Romb'.
-    
+    self kat: kat.
 	wierzcholki at: 2 put: bok@0.
     
 	wierzcholki at: 3 put: (bok )@(bok ).
 	wierzcholki at: 4 put: (0)@(bok ).
     Transcript show: 'Romb created';cr.
-    
-
-    !!
+    !
+	kat: aKat
+	"ustawia kat rombu"
+	kat := aKat!
+	!
+	!
 
 !Romb methodsFor: 'displaying'!
 drukuj

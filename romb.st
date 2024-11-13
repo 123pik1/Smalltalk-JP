@@ -1,9 +1,9 @@
-
 Object subclass: #Wielokat
 	instanceVariableNames: 'wierzcholki nazwa '
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'JezykiProgramowania'!
+
 
 !Wielokat methodsFor: 'initialize-release'!
 
@@ -14,7 +14,6 @@ initialize: liczbaWierzcholkow name: nowaNazwa
 	wierzcholki:=Array new: liczbaWierzcholkow.
 	wierzcholki at: 1 put: 0@0.
     Transcript show: 'Wielokat created';cr.!!
-
 
 !Wielokat methodsFor: 'accessing'!
 
@@ -82,7 +81,7 @@ Wielokat subclass: #Romb
 + figura
 	"dodaj 2 figury w sensie pola"
     | p |
-
+	"git jeśli kąt jest w radianach, jeśli kąt w stopniach to po prostu dodać: katWRad := self kat * Float pi / 180."
     p := self pole + figura pole.
 	^(Romb new) initialize: ((p/(self kat sin)) sqrt) kat: self kat.! !
    
@@ -91,8 +90,7 @@ Wielokat subclass: #Romb
 
 pole
 	"licz pole Rombu"
-
-	"TODO: pole rombu"
+	"git jeśli kąt jest w radianach, jeśli kąt w stopniach to po prostu dodać: katWRad := self kat * Float pi / 180."
     | bok |
     bok := (wierzcholki at: 2) x.
     ^  bok *  bok * (self kat  sin) abs.!!
@@ -108,6 +106,8 @@ initialize: bok kat:kat
 	super initialize: 4 name: 'Romb'.
     self kat: kat.
 	wierzcholki at: 2 put: bok@0.
+
+	"jest dobrze??"
 	wierzcholki at: 3 put: 2*bok@(bok * (self kat  sin) abs).
 	wierzcholki at: 4 put: bok@(bok * (self kat  sin) abs + bok).
     Transcript show: 'Romb created';cr.
@@ -139,6 +139,7 @@ drukuj
 	kat 
 	"podaje kat rombu"
 	^kat! 
+
 	kat: aKat
 	"ustawia kat rombu"
 	kat := aKat!

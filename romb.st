@@ -111,8 +111,19 @@ Wielokat subclass: #Romb
     | p |
 	"git jeśli kąt jest w radianach, jeśli kąt w stopniach to po prostu dodać: katWRad := self kat * Float pi / 180."
     p := self pole + figura pole.
-	^(Romb new) initialize: ((p/(self kat sin)) sqrt) kat: self kat.! !
+	^(Romb new) initialize: ((p/(self kat sin)) sqrt) kat: self kat.!
    
+= figura
+	"porównaj 2 figury w sensie przystawania"
+	Transcript show: 'Porównuje pola figur'; cr.
+	self pole = figura pole ifTrue: [ Transcript show: 'Pola figur są równe'; cr
+		self kat = figura kat
+		ifTrue: [^true]
+		ifFalse: [^false]].
+	ifFalse: [
+		Transcript show: 'Pola figur nie są równe'; cr.
+		^false].!!
+
 
 !Romb methodsFor: 'actions'!
 
@@ -120,13 +131,14 @@ pole
 	"licz pole Rombu"
 	"git jeśli kąt jest w radianach, jeśli kąt w stopniach to po prostu dodać: katWRad := self kat * Float pi / 180."
     | bok |
+	
 	"Obliczamy dlugosc boku"
     bok := ((wierzcholki at: 2) x - (wierzcholki at: 1) x) squared +
           ((wierzcholki at: 2) y - (wierzcholki at: 1) y) squared.
 	bok := bok sqrt.
 
 	"Pole rombu = bok^2 * sin(kąt)"
-    ^  (bok *  bok * (self kat  sin) abs) .!! "Zaokrąglamy od razu do 2 cyfr po przecinku"
+    ^  (bok *  bok * (self kat  sin) abs) roundTo: 0.01 .!! "Zaokrąglamy od razu do 2 cyfr po przecinku"
 
 
 
@@ -243,10 +255,10 @@ initialize: bok
 
 | romb |
 romb := Romb new.
-romb initialize: 7 kat:  0.785398e.
+romb initialize: 7 kat:  0.78e.
 | romb1 |
 romb1 := Romb new.
-romb1 initialize: 2 kat: 0.785398e.
+romb1 initialize: 7 kat: 0.78e.
 
 | romb2 |
 romb2 :=(romb+romb1). "lub (romb+romb1) drukuj."
@@ -262,3 +274,12 @@ kwadrat initialize: 4.
 kwadrat drukuj.
 kwadrat wysrodkuj. 
 kwadrat drukuj.  
+
+romb = romb1. "lub romb = romb1 drukuj."
+
+Transcript show: 'Romb: ';cr.
+Transcript show: romb pole printString;cr.
+Transcript show: 'Romb1: ';cr.
+Transcript show: romb1 pole printString;cr.
+
+romb = romb1 ifTrue: [Transcript show: 'Romb = Romb1';cr.] ifFalse: [Transcript show: 'Romb != Romb1';cr.].

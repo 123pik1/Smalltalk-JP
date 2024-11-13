@@ -120,8 +120,13 @@ pole
 	"licz pole Rombu"
 	"git jeśli kąt jest w radianach, jeśli kąt w stopniach to po prostu dodać: katWRad := self kat * Float pi / 180."
     | bok |
-    bok := (wierzcholki at: 2) x.
-    ^  bok *  bok * (self kat  sin) abs.!!
+	"Obliczamy dlugosc boku"
+    bok := ((wierzcholki at: 2) x - (wierzcholki at: 1) x) squared +
+          ((wierzcholki at: 2) y - (wierzcholki at: 1) y) squared.
+	bok := bok sqrt.
+
+	"Pole rombu = bok^2 * sin(kąt)"
+    ^  (bok *  bok * (self kat  sin) abs) .!! "Zaokrąglamy od razu do 2 cyfr po przecinku"
 
 
 
@@ -197,8 +202,13 @@ Wielokat subclass: #Kwadrat
 
 pole
 	"licz pole kwadratu"
+	| bok_squared |
+	"Obliczamy kwadrat długości boku, bo a^2=b^2+c^2"
+	bok_squared := ((wierzcholki at: 2) x - (wierzcholki at: 1) x) squared +
+          ((wierzcholki at: 2) y - (wierzcholki at: 1) y) squared.
 
-	^(wierzcholki at: 2) x squared! !
+	"pole to po prostu kwadrat boku"
+	^bok_squared! !
 
 !Kwadrat methodsFor: 'displaying'!
 
@@ -244,11 +254,11 @@ romb2 drukuj.
 
 
 romb drukuj.
-" romb wysrodkuj. "
-" romb drukuj. "
+romb wysrodkuj. 
+romb drukuj. 
 
 kwadrat := Kwadrat new.
 kwadrat initialize: 4.
 kwadrat drukuj.
-" kwadrat wysrodkuj. "
-" kwadrat drukuj.  "
+kwadrat wysrodkuj. 
+kwadrat drukuj.  

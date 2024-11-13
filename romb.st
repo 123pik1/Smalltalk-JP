@@ -42,6 +42,24 @@ checkIfWielokat: wielokat
 
 !!
 
+!Wielokat methodsFor: 'actions'!
+
+wysrodkuj
+	"przenosi figure tak że punkt 0,0 układu będzie w punkcie przeciecia ,,przekatnych'' wielokata"
+	| srodek |
+	srodek := self srodekPrzekatnych.
+
+	
+	"Przesuwamy kazdy wierzcholek tak zeby srodek przekatnych znalazl sie w punkcie 0,0"
+	1 to: wierzcholki size do: [:i |
+        wierzcholki at: i put: (wierzcholki at: i) - srodek.
+    ].
+
+
+	Transcript show: 'Figura zostala wysrodkowana.'; cr.
+
+!!
+
 !Wielokat methodsFor: 'displaying'!
 
 drukuj
@@ -64,6 +82,13 @@ drukuj
     
     ! !
 
+!Wielokat methodsFor: 'abstract'!
+
+srodekPrzekatnych
+    "Oblicza środek figury - ale aby działać prawidłowo musi być nadpisany w podklasach"
+	"nil oznacza że ta metoda nie wykonuje zadnej operacji i zwraca brak wartosci - jak NULL"
+    ^ 0@0.  !!
+	
 
 
 
@@ -145,11 +170,16 @@ drukuj
 	kat := aKat!
 	!!
 
+!Romb methodsFor: 'abstract'!
 
+srodekPrzekatnych
+	"Wyznacza środek przekątnych rombu"
+	| srodek |
+	
+	"Punkt przecięcia przekątnych rombu jest w punkcie środka przekątnych(przekątne po przecięciu dzielą się na równe połowy)"
+	srodek := ((wierzcholki at: 1) + (wierzcholki at: 3)) / 2.
 
-
-
-
+	^srodek. !! 
 
 
 
@@ -177,6 +207,16 @@ pole
 
 	^(wierzcholki at: 2) x squared! !
 
+!Kwadrat methodsFor: 'abstract'!
+
+srodekPrzekatnych
+	"Wyznacza środek przekątnych kwadratu"
+	| srodek |
+	srodek := ((wierzcholki at: 1) + (wierzcholki at: 3)) / 2.
+
+	" ^2@2. !! "
+	^srodek. !! 
+
 !Kwadrat methodsFor: 'initialize-release'!
 
 initialize: bok
@@ -195,7 +235,17 @@ romb initialize: 7 kat:  0.785398e.
 romb1 := Romb new.
 romb1 initialize: 2 kat: 0.785398e.
 
-(romb+romb1) drukuj.
+| romb2 |
+romb2 :=(romb+romb1). "lub (romb+romb1) drukuj."
+romb2 drukuj.
 
 
 romb drukuj.
+romb wysrodkuj.
+romb drukuj.
+
+kwadrat := Kwadrat new.
+kwadrat initialize: 4.
+kwadrat drukuj.
+kwadrat wysrodkuj.
+kwadrat drukuj. 

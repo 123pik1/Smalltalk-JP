@@ -1,5 +1,5 @@
 Object subclass: #Wielokat
-	instanceVariableNames: 'wierzcholki nazwa '
+	instanceVariableNames: 'wierzcholki nazwa wysrodkowana'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'JezykiProgramowania'!
@@ -9,7 +9,7 @@ Object subclass: #Wielokat
 
 initialize: liczbaWierzcholkow name: nowaNazwa
 	"konstruktor obiektu - wielokata"
-
+	wysrodkowana:=false.
 	nazwa:=nowaNazwa.
 	wierzcholki:=Array new: liczbaWierzcholkow.
 	wierzcholki at: 1 put: 0@0.
@@ -55,8 +55,8 @@ wysrodkuj
         wierzcholki at: i put: (wierzcholki at: i) - srodek.
     ].
 
-
-	Transcript show: 'Figura zostala wysrodkowana.'; cr.
+	wysrodkowana := true.  "Ustawiamy, że figura została wyśrodkowana"
+	" Transcript show: 'Figura zostala wysrodkowana.'; cr. "
 
 !!
 
@@ -79,6 +79,9 @@ drukuj
     [:i |
         Transcript show: (wierzcholki at: i) printString;cr.
     ].
+	wysrodkowana 
+        ifTrue: [Transcript show: 'Figura została wyśrodkowana.'; cr.]
+        ifFalse: [Transcript show: 'Figura nie została jeszcze wyśrodkowana.'; cr.].
     
     ! !
 
@@ -141,24 +144,14 @@ initialize: bok kat:kat
 	!
 
 !Romb methodsFor: 'displaying'!
+
 drukuj
-    "drukuje nazwe wielokata i jego wierzcholkow"
+    "drukuje nazwe rombu, jego wierzcholki oraz pole"
 	
-    (self checkIfWielokat: self) ifTrue: [
-        Transcript show: 'Ta klasa jest wielokatem'; cr.
-    ] ifFalse: [
-        Transcript show: 'Ta klasa nie jest wielokatem'; cr.
-    ].
-    Transcript show: 'Nazwa wielokata to: '; cr.
-    Transcript show: self nazwa; cr.
-    Transcript show: 'Pole wielokata to: '; cr.
+	super drukuj. "wywołuje ogólną metodę drukuj z klasy bazowej, czyli wypisuje nazwe i wierzcholki"
+    Transcript show: 'Pole rombu to: '; cr.
     Transcript show: self pole printString; cr.
-    Transcript show: 'Wierzcholki wielokata to: '; cr.
-    1 to: wierzcholki size do: [:i |
-        Transcript show: (wierzcholki at: i) printString; cr.
-    ].!!
-
-
+	!!
 
 !Romb methodsFor: 'accessing'!
 	kat 
@@ -207,6 +200,16 @@ pole
 
 	^(wierzcholki at: 2) x squared! !
 
+!Kwadrat methodsFor: 'displaying'!
+
+drukuj
+    "drukuje nazwe rombu, jego wierzcholki oraz pole"
+	
+	super drukuj. "wywołuje ogólną metodę drukuj z klasy bazowej, czyli wypisuje nazwe i wierzcholki"
+    Transcript show: 'Pole kwadratu to: '; cr.
+    Transcript show: self pole printString; cr.
+	!!
+
 !Kwadrat methodsFor: 'abstract'!
 
 srodekPrzekatnych
@@ -241,11 +244,11 @@ romb2 drukuj.
 
 
 romb drukuj.
-romb wysrodkuj.
-romb drukuj.
+" romb wysrodkuj. "
+" romb drukuj. "
 
 kwadrat := Kwadrat new.
 kwadrat initialize: 4.
 kwadrat drukuj.
-kwadrat wysrodkuj.
-kwadrat drukuj. 
+" kwadrat wysrodkuj. "
+" kwadrat drukuj.  "

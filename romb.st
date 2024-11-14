@@ -114,15 +114,24 @@ Wielokat subclass: #Romb
 	^(Romb new) initialize: ((p/(self kat sin)) sqrt) kat: self kat.!
    
 = figura
-	"porównaj 2 figury w sensie przystawania"
-	Transcript show: 'Porównuje pola figur'; cr.
-	self pole = figura pole ifTrue: [ Transcript show: 'Pola figur są równe'; cr
-		self kat = figura kat
-		ifTrue: [^true]
-		ifFalse: [^false]].
-	ifFalse: [
-		Transcript show: 'Pola figur nie są równe'; cr.
-		^false].!!
+    "Porównaj 2 figury w sensie przystawania"
+    Transcript show: 'Porównuje pola figur'; cr.
+    (self pole = figura pole) ifTrue: [
+        Transcript show: 'Pola figur są równe'; cr.
+        (self kat = figura kat)
+            ifTrue: [ 
+                Transcript show: 'Kąty figur są równe'; cr.
+                ^true
+            ]
+            ifFalse: [
+                Transcript show: 'Kąty figur nie są równe'; cr.
+                ^false
+            ].
+    ] ifFalse: [
+        Transcript show: 'Pola figur nie są równe'; cr.
+        ^false
+    ].!
+
 
 
 !Romb methodsFor: 'actions'!
@@ -208,7 +217,26 @@ Wielokat subclass: #Kwadrat
 	| p |
 
 	p:=self pole + figura pole.
-	^(Kwadrat new) initialize: p sqrt! !
+	^(Kwadrat new) initialize: p sqrt.!
+
+= figura
+    "Porównaj 2 figury w sensie przystawania"
+    Transcript show: 'Porównuje pola figur'; cr.
+    (self pole = figura pole) ifTrue: [
+        Transcript show: 'Pola figur są równe'; cr.
+        (self kat = figura kat)
+            ifTrue: [ 
+                Transcript show: 'Kąty figur są równe'; cr.
+                ^true
+            ]
+            ifFalse: [
+                Transcript show: 'Kąty figur nie są równe'; cr.
+                ^false
+            ].
+    ] ifFalse: [
+        Transcript show: 'Pola figur nie są równe'; cr.
+        ^false
+    ].!
 
 !Kwadrat methodsFor: 'actions'!
 
@@ -231,6 +259,12 @@ drukuj
     Transcript show: 'Pole kwadratu to: '; cr.
     Transcript show: self pole printString; cr.
 	!!
+
+!Kwadrat methodsFor: 'accessing'!
+	kat 
+	"zwraca 90* w radianach"
+	^1.57e! 
+	!
 
 !Kwadrat methodsFor: 'abstract'!
 
@@ -259,27 +293,53 @@ romb initialize: 7 kat:  0.78e.
 | romb1 |
 romb1 := Romb new.
 romb1 initialize: 7 kat: 0.78e.
+| rombkw |
+rombkw := Romb new.
+rombkw initialize: 4 kat: 1.57e.
 
+| rombinny |
+rombinny := Romb new.
+rombinny initialize: 5 kat: 2e.
+
+| kwadrat |
+kwadrat := Kwadrat new.
+kwadrat initialize: 4.
+| kwadrat1 |
+kwadrat1 := Kwadrat new.
+kwadrat1 initialize: 4.
+
+| kwadratinny |
+kwadratinny := Kwadrat new.
+kwadratinny initialize: 6.
+
+Transcript show: '------------- Tworzymy romb2 będący sumą rombu "romb" i "romb1 -------------"';cr.
 | romb2 |
 romb2 :=(romb+romb1). "lub (romb+romb1) drukuj."
 romb2 drukuj.
 
-
+Transcript show: '------------- Demonstracja wysrodkowania rombu "romb -------------"';cr.
 romb drukuj.
 romb wysrodkuj. 
 romb drukuj. 
 
-kwadrat := Kwadrat new.
-kwadrat initialize: 4.
-kwadrat drukuj.
-kwadrat wysrodkuj. 
-kwadrat drukuj.  
+Transcript show: '------------- Demonstracja inicjalizacji  i wysrodkowania kwadratu "kwadrat2 -------------"';cr.
+kwadrat2 := Kwadrat new.
+kwadrat2 initialize: 4.
+kwadrat2 drukuj.
+kwadrat2 wysrodkuj. 
+kwadrat2 drukuj.  
 
-romb = romb1. "lub romb = romb1 drukuj."
-
-Transcript show: 'Romb: ';cr.
-Transcript show: romb pole printString;cr.
-Transcript show: 'Romb1: ';cr.
-Transcript show: romb1 pole printString;cr.
-
+Transcript show: '------------- Porównywanie tych samych rombow "romb" i "romb1" -------------';cr.
 romb = romb1 ifTrue: [Transcript show: 'Romb = Romb1';cr.] ifFalse: [Transcript show: 'Romb != Romb1';cr.].
+Transcript show: '------------- Porównywanie tych samych kwadratow "kwadrat" i "kwadrat1" -------------';cr.
+kwadrat = kwadrat1 ifTrue: [Transcript show: 'Kwadrat = Kwadrat1';cr.] ifFalse: [Transcript show: 'Kwadrat != Kwadrat1';cr.].
+Transcript show: '------------- Porównywanie rombu w ksztalcie kwadratu "rombkw" i przystajacego kwadratu "kwadrat" -------------';cr.
+rombkw = kwadrat ifTrue: [Transcript show: 'rombkw = kwadrat';cr.] ifFalse: [Transcript show: 'rombkw != kwadrat';cr.].
+Transcript show: '------------- To samo tylko wykorzystujac metode drugiego obiektu -------------';cr.
+kwadrat = rombkw ifTrue: [Transcript show: 'kwadrat = rombkw';cr.] ifFalse: [Transcript show: 'kwadrat != rombkw';cr.].
+Transcript show: '------------- porownojemy rozne kwadraty -------------';cr.
+kwadrat = kwadratinny ifTrue: [Transcript show: 'kwadrat = kwadratinny';cr.] ifFalse: [Transcript show: 'kwadrat != kwadratinny';cr.].
+Transcript show: '------------- porownojemy roznie romby -------------';cr.
+romb = rombinny ifTrue: [Transcript show: 'romb = rombinny';cr.] ifFalse: [Transcript show: 'romb != rombinny';cr.].
+Transcript show: '------------- porownojemy rozne romby i kwadraty -------------';cr.
+kwadratinny = rombinny ifTrue: [Transcript show: 'kwadratinny = rombinny';cr.] ifFalse: [Transcript show: 'kwadratinny != rombinny';cr.].
